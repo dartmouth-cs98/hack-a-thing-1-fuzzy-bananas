@@ -22,6 +22,8 @@ public class Card : MonoBehaviour {
 			Debug.LogError("Asset '" + assetName + "' could not be found.");
 		} else {
 			_rank = rank;
+			this.GetComponent<SpriteRenderer> ().sprite = Resources.Load (assetName, typeof(Sprite)) as Sprite;
+			Debug.Log ("saysomething");
 		}
 	}
 	void OnMouseDrag()
