@@ -6,7 +6,11 @@ using UnityEngine;
 
 public class Deck : MonoBehaviour {
 	private List<int> _deck = new List<int>();
-	private List<Card> _onTable = new List<Card>();
+	private List<Card> _onRow1 = new List<Card>();	// Descending 1
+	private List<Card> _onRow2 = new List<Card>();	// Descending 2
+	private List<Card> _onRow3 = new List<Card>();	// Ascending 3
+	private List<Card> _onRow4 = new List<Card>();	// Ascending 4
+	private List<Card> _onHand = new List<Card>();
 	public GameObject deck;
 
 	// Use this for initialization
@@ -19,16 +23,21 @@ public class Deck : MonoBehaviour {
 
 	void OnMouseDown() 
 	{
-		int i = Random.Range (0, _deck.Count - 1);
-		int cardRank = _deck [i];
-		_deck.RemoveAt (i);
+		if (_onHand.Count >= 8) {
+			//display
+			Debug.Log("table count is 8, can't draw from deck");
+		} else {
+			int i = Random.Range (0, _deck.Count - 1);
+			int cardRank = _deck [i];
+			_deck.RemoveAt (i);
 
-		Debug.Log ("OnMouseDown of Deck.cs called, rank is " + cardRank);
+			Debug.Log ("OnMouseDown of Deck.cs called, rank is " + cardRank);
 
 //		Card card = new Card (cardRank);
 //		Card card = deck.AddComponent<Card>();
-		Card card = getCard(cardRank);
-		_onTable.Add (card);
+			Card card = getCard (cardRank);
+			_onHand.Add (card);
+		}
 	}
 
 	Card getCard(int _rank) {
@@ -47,5 +56,29 @@ public class Deck : MonoBehaviour {
 			return card;
 		}
 	}
+
+	public void moveHandToRow (Card card, int row) {
+		Debug.Log ("moved card " + card + " to row " + row);
+		_onHand.Remove (card);
+		if (row == 1) {
+			_onRow1.Add (card);
+		} else if (row == 2) {
+			_onRow2.Add (card);
+		} else if (row == 3) {
+			_onRow3.Add (card);
+		} else if (row == 4) {
+			_onRow4.Add (card);
+		}
+	}
+
+	public int numOnHand()
+	{
+		return _onHand.Count;
+	}
+
+//	public List<Card> getOnTable()
+//	{
+//		return _onTable;
+//	}
 
 }
