@@ -37,7 +37,10 @@ public class Card : MonoBehaviour {
 		} else {
 //			_rank = _rank;
 			Debug.Log("making card visible :)");
-			_card.layer = 31;
+//			_card.layer = 31;
+			SpriteRenderer sprite = _card.GetComponent<SpriteRenderer>();
+			sprite.sortingOrder = 0;
+			sprite.sortingLayerName = "Player";
 
 			Vector3 newPosition = new Vector3(100, 100, 10.0f);
 			transform.position = Camera.main.ScreenToWorldPoint(newPosition);
